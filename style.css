@@ -10,6 +10,77 @@ body {
   display: grid;
   place-items: center;
   background-image: url("https://d585tldpucybw.cloudfront.net/sfimages/default-source/professional-services/ui-ux-modernization-hero.png?sfvrsn=d92d0367_3");
+  background-position: center;
+  background-size: cover;
+}
+
+.welcome-user {
+  width: 60vw;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  display: none;
+
+  /* GLoassmorphism effect */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.welcome-user h2 {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.welcome-content {
+  padding: 2rem;
+}
+
+.welcome-content h1 {
+  margin: 0;
+  color: white;
+  line-height: 3.5rem;
+  font-size: 2.7rem;
+}
+
+.welcome-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.welcome-actions h2 {
+  font-size: 2rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.welcome-actions a {
+  text-decoration: none;
+  background-color: #5a20cb;
+  width: 250px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  border: 3px solid #5a20cb;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.welcome-actions a:hover {
+  background-color: transparent;
+  /* color: #5a20cb; */
+  border-color: white;
 }
 
 .signup-container,
@@ -26,13 +97,39 @@ body {
   padding: 10px 0;
 }
 
+.expense-container {
+  width: 40vw;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  color: white;
+  display: none;
+
+  /* GLoassmorphism effect */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.expense-container h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
 .signup-container > h1,
 .login-container > h1 {
   margin-bottom: 0;
 }
 
 .signup-form,
-.login-form {
+.login-form,
+.expense-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -42,7 +139,9 @@ body {
 }
 
 .signup-form input,
-.login-form input {
+.login-form input,
+.expense-form input,
+.expense-form select {
   height: 40px;
   padding: 5px 10px;
   border-radius: 4px;
@@ -57,7 +156,8 @@ body {
 }
 
 .signup-form button,
-.login-form button {
+.login-form button,
+.expense-form button {
   height: 40px;
   border-radius: 4px;
   background-color: #5a20cb;
@@ -68,8 +168,13 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.expense-form button {
+  margin-top: 1rem;
+}
+
 .signup-form button:hover,
-.login-form button:hover {
+.login-form button:hover,
+.expense-form button:hover {
   background-color: white;
   color: #5a20cb;
 }

@@ -1,5 +1,8 @@
 const signUpForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
+const expenseContainer = document.getElementById("expenseContainer");
+const expenseForm = document.getElementById("expenseForm");
+const welcomeUser = document.getElementById("welcomeUser");
 
 const backendAPI = "http://localhost:3000/api";
 
@@ -15,8 +18,10 @@ signUpForm?.addEventListener("submit", (e) => {
   axios
     .post(`${backendAPI}/auth/register`, { name, email, phone, password })
     .then((res) => {
-      alert("Signed up successfully");
-      console.log(res.data);
+      alert("Signed up successfully. Please login.");
+
+      const url = window.location.href.split("/").slice(0, -1).join("/");
+      window.location.replace(`${url}/login.html`);
     })
     .catch((err) => {
       alert(err.response.data.message);
@@ -36,14 +41,39 @@ loginForm?.addEventListener("submit", (e) => {
   axios
     .post(`${backendAPI}/auth/login`, { email, password })
     .then((res) => {
+      localStorage.setItem("ET_Token", JSON.stringify(res.data.accessToken));
       alert("Logged in successfully");
-      console.log(res.data);
+
+      const url = window.location.href.split("/").slice(0, -1).join("/");
+      window.location.replace(url);
     })
     .catch((err) => {
-      // alert(err.response.data.message);
-      alert("Something went wrong");
+      alert(err.response.data.message);
       console.log(err.response);
     });
 
   loginForm.reset();
 });
+
+expenseForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(expenseForm);
+
+  let amount = formData.get("amount");
+  let category = formData.get("category");
+  let desc = formData.get("desc");
+
+  console.log({ amount, category, desc });
+  expenseForm.reset();
+});
+
+const page = window.location.href.split("/").at(-1);
+if (page === "index.html" || page === "") {
+  window.addEventListener("DOMContentLoaded", paintHomePage);
+}
+
+function paintHomePage() {
+  const accessToken = localStorage.getItem("ET_Token");
+  if (accessToken) expenseContainer.style.display = "flex";
+  else welcomeUser.style.display = "flex";
+}

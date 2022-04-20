@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home | Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body
+    style="
+      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=100');
+    "
+  >
+    <div class="welcome-user" id="welcomeUser">
+      <div class="welcome-content">
+        <h1>Manage your day-to-day expenses.</h1>
+        <h1>Save, view and analyze your spending.</h1>
+      </div>
+      <h2>Start for free</h2>
+
+      <div class="welcome-actions">
+        <a href="./signup.html">Sign Up</a>
+        <a href="./login.html">Login</a>
+      </div>
+    </div>
+
+    <div class="expense-container" id="expenseContainer">
+      <h1>Add Expense</h1>
+      <form class="expense-form" id="expenseForm">
+        <label for="amountInput">Enter amount</label>
+        <input
+          type="number"
+          name="amount"
+          placeholder="Enter amount (number)"
+          id="amountInput"
+          required
+          autofocus
+        />
+        <label for="categoryInput">Enter email</label>
+        <select name="category" id="categoryInput" autofocus>
+          <option value="select">Select category</option>
+          <option value="food">Food</option>
+          <option value="clothes">Clothes</option>
+          <option value="fuel">Fuel</option>
+          <option value="investment">Investment</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+        <label for="descInput">Enter description</label>
+        <input
+          type="text"
+          name="desc"
+          placeholder="Enter description"
+          id="descInput"
+          required
+          autofocus
+        />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
