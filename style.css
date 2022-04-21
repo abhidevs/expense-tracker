@@ -15,8 +15,8 @@ body {
 }
 
 .welcome-user {
-  width: 60vw;
-  height: 75vh;
+  width: 850px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -98,8 +98,8 @@ body {
 }
 
 .expense-container {
-  width: 40vw;
-  min-height: 60vh;
+  width: 500px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;

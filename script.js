@@ -6,6 +6,11 @@ const welcomeUser = document.getElementById("welcomeUser");
 
 const backendAPI = "http://localhost:3000/api";
 
+// Configuring the authorization header
+const accessToken = JSON.parse(localStorage.getItem("ET_Token"));
+if (accessToken)
+  axios.defaults.headers.common["authorization"] = `Bearer ${accessToken}`;
+
 signUpForm?.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(signUpForm);
@@ -18,6 +23,7 @@ signUpForm?.addEventListener("submit", (e) => {
   axios
     .post(`${backendAPI}/auth/register`, { name, email, phone, password })
     .then((res) => {
+      signUpForm.reset();
       alert("Signed up successfully. Please login.");
 
       const url = window.location.href.split("/").slice(0, -1).join("/");
@@ -27,8 +33,6 @@ signUpForm?.addEventListener("submit", (e) => {
       alert(err.response.data.message);
       console.log(err.response);
     });
-
-  signUpForm.reset();
 });
 
 loginForm?.addEventListener("submit", (e) => {
@@ -41,6 +45,7 @@ loginForm?.addEventListener("submit", (e) => {
   axios
     .post(`${backendAPI}/auth/login`, { email, password })
     .then((res) => {
+      loginForm.reset();
       localStorage.setItem("ET_Token", JSON.stringify(res.data.accessToken));
       alert("Logged in successfully");
 
@@ -51,8 +56,6 @@ loginForm?.addEventListener("submit", (e) => {
       alert(err.response.data.message);
       console.log(err.response);
     });
-
-  loginForm.reset();
 });
 
 expenseForm?.addEventListener("submit", (e) => {
@@ -63,8 +66,17 @@ expenseForm?.addEventListener("submit", (e) => {
   let category = formData.get("category");
   let desc = formData.get("desc");
 
-  console.log({ amount, category, desc });
-  expenseForm.reset();
+  axios
+    .post(`${backendAPI}/user/expense`, { amount, category, desc })
+    .then(({ data }) => {
+      expenseForm.reset();
+      alert("Expense saved successfully");
+      console.log(data);
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response);
+    });
 });
 
 const page = window.location.href.split("/").at(-1);
