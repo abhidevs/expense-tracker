@@ -14,6 +14,69 @@ body {
   background-size: cover;
 }
 
+.navbar {
+  height: 65px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.navbar.lightmode {
+  background-color: white;
+}
+
+.navbar.darkmode {
+  /* GLoassmorphism effect */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.8);
+}
+
+.navbar-items {
+  margin: 0;
+  padding: 10px 5rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-items a:first-of-type {
+  flex: 1;
+}
+
+.navbar a {
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.navbar.lightmode .navbar-items a:first-of-type {
+  color: #5a20cb;
+  font-weight: 600;
+}
+
+.navbar.darkmode .navbar-items a:first-of-type {
+  color: white;
+  font-weight: 500;
+}
+
+.navbar button,
+.navbar #navLoginBtn {
+  padding: 10px 2rem;
+  border: 2px solid #5a20cb;
+  background-color: #5a20cb;
+  color: white;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.navbar-items a:last-of-type, .navbar-items button {
+  display: none;
+}
+
 .welcome-user {
   width: 850px;
   height: 550px;
@@ -23,19 +86,14 @@ body {
   align-items: center;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
   padding: 2rem;
-  display: none;
-
-  /* GLoassmorphism effect */
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background-color: rgba(17, 25, 40, 0.75);
+  background-color: white;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  display: none;
 }
 
 .welcome-user h2 {
   font-size: 2rem;
-  color: white;
+  color: black;
   margin-bottom: 2rem;
 }
 
@@ -45,7 +103,7 @@ body {
 
 .welcome-content h1 {
   margin: 0;
-  color: white;
+  color: black;
   line-height: 3.5rem;
   font-size: 2.7rem;
 }
@@ -78,9 +136,8 @@ body {
 }
 
 .welcome-actions a:hover {
-  background-color: transparent;
-  /* color: #5a20cb; */
-  border-color: white;
+  background-color: white;
+  color: #5a20cb;
 }
 
 .signup-container,
@@ -106,14 +163,22 @@ body {
   align-items: center;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
   padding: 2rem;
-  color: white;
+  border-radius: 12px;
   display: none;
+}
+
+.expense-container.lightmode {
+  background-color: white;
+  color: #000;
+}
+
+.expense-container.darkmode {
+  color: white;
 
   /* GLoassmorphism effect */
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
-  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
 }
 

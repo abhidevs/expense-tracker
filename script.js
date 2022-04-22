@@ -3,13 +3,29 @@ const loginForm = document.getElementById("loginForm");
 const expenseContainer = document.getElementById("expenseContainer");
 const expenseForm = document.getElementById("expenseForm");
 const welcomeUser = document.getElementById("welcomeUser");
+const navbar = document.getElementById("navbar");
+const navLoginBtn = document.getElementById("navLoginBtn");
+const buyPremium = document.getElementById("buyPremium");
+const logoutBtn = document.getElementById("logoutBtn");
 
 const backendAPI = "http://localhost:3000/api";
 
 // Configuring the authorization header
-const accessToken = JSON.parse(localStorage.getItem("ET_Token"));
-if (accessToken)
-  axios.defaults.headers.common["authorization"] = `Bearer ${accessToken}`;
+const userInfo = JSON.parse(localStorage.getItem("ET_Userinfo"));
+if (userInfo && userInfo.token)
+  axios.defaults.headers.common["authorization"] = `Bearer ${userInfo.token}`;
+
+function showLightMode() {
+  navbar.classList.add("lightmode");
+  welcomeUser.classList.add("lightmode");
+  expenseContainer.classList.add("lightmode");
+}
+
+function showDarkMode() {
+  navbar.classList.add("darkmode");
+  welcomeUser.classList.add("darkmode");
+  expenseContainer.classList.add("darkmode");
+}
 
 signUpForm?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -44,9 +60,12 @@ loginForm?.addEventListener("submit", (e) => {
 
   axios
     .post(`${backendAPI}/auth/login`, { email, password })
-    .then((res) => {
+    .then(({ data: { accessToken: token, isPremiumMember } }) => {
       loginForm.reset();
-      localStorage.setItem("ET_Token", JSON.stringify(res.data.accessToken));
+      localStorage.setItem(
+        "ET_Userinfo",
+        JSON.stringify({ token, isPremiumMember })
+      );
       alert("Logged in successfully");
 
       const url = window.location.href.split("/").slice(0, -1).join("/");
@@ -79,13 +98,89 @@ expenseForm?.addEventListener("submit", (e) => {
     });
 });
 
+buyPremium?.addEventListener("click", (e) => {
+  axios
+    .post(`${backendAPI}/user/payment/order`, {
+      params: {
+        amount: 100000,
+        currency: "INR",
+        receipt: "su001",
+        payment_capture: "1",
+      },
+    })
+    .then(({ data }) => {
+      console.log(data);
+      const { amount, id } = data?.order;
+
+      let options = {
+        key: "rzp_test_PwBQKIuzWk42Av", // Enter the Key ID generated from the Dashboard
+        amount: amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        name: "Expense Tracker",
+        description: "Get Premium Features",
+        image: "https://example.com/your_logo",
+        order_id: id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        handler: function (response) {
+          verifyOrder({
+            orderId: response.razorpay_order_id,
+            paymentId: response.razorpay_payment_id,
+            signature: response.razorpay_signature,
+          });
+        },
+        theme: "#227254",
+      };
+
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+      console.log(err);
+    });
+});
+
+logoutBtn?.addEventListener("click", (e) => {
+  localStorage.removeItem("ET_Userinfo");
+  const url = window.location.href.split("/").slice(0, -1).join("/");
+  window.location.replace(`${url}/login.html`);
+});
+
+function verifyOrder(order) {
+  axios
+    .post(`${backendAPI}/user/payment/verify`, { order })
+    .then(({ data: { message, success } }) => {
+      if (success) alert(message);
+      console.log(message);
+      localStorage.setItem(
+        "ET_Userinfo",
+        JSON.stringify({ ...userInfo, isPremiumMember: true })
+      );
+      showDarkMode();
+      buyPremium.style.display = "none";
+    })
+    .catch((err) => {
+      alert(err.response?.data?.message);
+      console.log(err);
+    });
+}
+
 const page = window.location.href.split("/").at(-1);
 if (page === "index.html" || page === "") {
   window.addEventListener("DOMContentLoaded", paintHomePage);
 }
 
 function paintHomePage() {
-  const accessToken = localStorage.getItem("ET_Token");
-  if (accessToken) expenseContainer.style.display = "flex";
-  else welcomeUser.style.display = "flex";
+  if (userInfo && userInfo.token) {
+    logoutBtn.style.display = "block";
+    expenseContainer.style.display = "flex";
+  } else {
+    navLoginBtn.style.display = "block";
+    welcomeUser.style.display = "flex";
+  }
+
+  if (userInfo && userInfo.isPremiumMember) showDarkMode();
+  else {
+    showLightMode();
+    buyPremium.style.display = "block";
+  }
 }
