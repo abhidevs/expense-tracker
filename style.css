@@ -73,7 +73,8 @@ body {
   cursor: pointer;
 }
 
-.navbar-items a:last-of-type, .navbar-items button {
+.navbar-items a:last-of-type,
+.navbar-items button {
   display: none;
 }
 
@@ -141,7 +142,8 @@ body {
 }
 
 .signup-container,
-.login-container {
+.login-container,
+.reset-password-container {
   width: 400px;
   background: white;
   height: fit-content;
@@ -152,6 +154,10 @@ body {
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   padding: 10px 0;
+}
+
+.reset-password-container {
+  display: none;
 }
 
 .expense-container {
@@ -188,12 +194,14 @@ body {
 }
 
 .signup-container > h1,
-.login-container > h1 {
+.login-container > h1,
+.reset-password-container > h1 {
   margin-bottom: 0;
 }
 
 .signup-form,
 .login-form,
+.reset-password-form,
 .expense-form {
   width: 100%;
   display: flex;
@@ -205,6 +213,7 @@ body {
 
 .signup-form input,
 .login-form input,
+.reset-password-form input,
 .expense-form input,
 .expense-form select {
   height: 40px;
@@ -216,12 +225,14 @@ body {
 }
 
 .signup-form input:focus,
-.login-form input:focus {
+.login-form input:focus,
+.reset-password-form input:focus {
   color: #5a20cb;
 }
 
 .signup-form button,
 .login-form button,
+.reset-password-form button,
 .expense-form button {
   height: 40px;
   border-radius: 4px;
@@ -233,12 +244,19 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
+.login-form #forgotPassword {
+  margin: 6px 0;
+  color: blue;
+  cursor: pointer;
+}
+
 .expense-form button {
   margin-top: 1rem;
 }
 
 .signup-form button:hover,
 .login-form button:hover,
+.reset-password-form button:hover,
 .expense-form button:hover {
   background-color: white;
   color: #5a20cb;

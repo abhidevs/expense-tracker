@@ -1,5 +1,8 @@
 const signUpForm = document.getElementById("signupForm");
+const loginContainer = document.getElementById("loginContainer");
 const loginForm = document.getElementById("loginForm");
+const resetPasswordForm = document.getElementById("resetPasswordForm");
+const resetPassContainer = document.getElementById("resetPassContainer");
 const expenseContainer = document.getElementById("expenseContainer");
 const expenseForm = document.getElementById("expenseForm");
 const welcomeUser = document.getElementById("welcomeUser");
@@ -7,6 +10,7 @@ const navbar = document.getElementById("navbar");
 const navLoginBtn = document.getElementById("navLoginBtn");
 const buyPremium = document.getElementById("buyPremium");
 const logoutBtn = document.getElementById("logoutBtn");
+const forgotPassword = document.getElementById("forgotPassword");
 
 const backendAPI = "http://localhost:3000/api";
 
@@ -143,6 +147,29 @@ logoutBtn?.addEventListener("click", (e) => {
   localStorage.removeItem("ET_Userinfo");
   const url = window.location.href.split("/").slice(0, -1).join("/");
   window.location.replace(`${url}/login.html`);
+});
+
+forgotPassword?.addEventListener("click", () => {
+  loginContainer.style.display = "none";
+  resetPassContainer.style.display = "flex";
+});
+
+resetPasswordForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(resetPasswordForm);
+  let email = formData.get("email");
+
+  axios
+    .post(`${backendAPI}/auth/forgotpassword`, { email })
+    .then(({ data }) => {
+      resetPasswordForm.reset();
+      alert("Password changed successfully");
+      console.log(data);
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response);
+    });
 });
 
 function verifyOrder(order) {
