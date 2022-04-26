@@ -156,10 +156,6 @@ body {
   padding: 10px 0;
 }
 
-.reset-password-container {
-  display: none;
-}
-
 .expense-container {
   width: 500px;
   min-height: 400px;
@@ -242,12 +238,6 @@ body {
   border: 2px solid #5a20cb;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-}
-
-.login-form #forgotPassword {
-  margin: 6px 0;
-  color: blue;
-  cursor: pointer;
 }
 
 .expense-form button {

@@ -163,7 +163,7 @@ resetPasswordForm?.addEventListener("submit", (e) => {
     .post(`${backendAPI}/auth/forgotpassword`, { email })
     .then(({ data }) => {
       resetPasswordForm.reset();
-      alert("Password changed successfully");
+      alert(data.message);
       console.log(data);
     })
     .catch((err) => {
