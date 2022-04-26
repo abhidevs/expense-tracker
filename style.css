@@ -40,11 +40,13 @@ body {
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 2rem;
 }
 
-.navbar-items a:first-of-type {
-  flex: 1;
+.navbar-items div {
+  display: flex;
+  gap: 2rem;
 }
 
 .navbar a {
@@ -52,12 +54,12 @@ body {
   font-size: 1.2rem;
 }
 
-.navbar.lightmode .navbar-items a:first-of-type {
+.navbar.lightmode .navbar-items .navbar-items-left a {
   color: #5a20cb;
   font-weight: 600;
 }
 
-.navbar.darkmode .navbar-items a:first-of-type {
+.navbar.darkmode .navbar-items .navbar-items-left a {
   color: white;
   font-weight: 500;
 }
@@ -169,6 +171,50 @@ body {
   display: none;
 }
 
+.all-expense-container {
+  width: 1000px;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  border-radius: 12px;
+  color: white;
+  display: none;
+
+  /* GLoassmorphism effect */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.all-expense-container .btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 3rem 1rem;
+  gap: 2rem;
+}
+
+.all-expense-container .btn-wrapper button {
+  padding: 10px 2rem;
+  border-radius: 50px;
+  border: 2px solid #5a20cb;
+  background-color: #5a20cb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+}
+
+.all-expense-container .btn-wrapper button:hover {
+  background-color: white;
+  color: #5a20cb;
+  font-weight: 600;
+}
+
 .expense-container.lightmode {
   background-color: white;
   color: #000;
@@ -184,7 +230,8 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
-.expense-container h1 {
+.expense-container h1,
+.all-expense-container h1 {
   font-size: 2.5rem;
   margin: 0;
 }
@@ -198,13 +245,31 @@ body {
 .signup-form,
 .login-form,
 .reset-password-form,
-.expense-form {
+.expense-form,
+.all-expenses {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 2rem 3rem 1rem;
   gap: 10px;
+}
+
+.all-expenses table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+.all-expenses th {
+  padding: 8px;
+  background-color: #5a20cb;
+  font-weight: 600;
+}
+
+.all-expenses td {
+  padding: 5px;
 }
 
 .signup-form input,

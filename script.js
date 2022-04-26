@@ -4,12 +4,14 @@ const loginForm = document.getElementById("loginForm");
 const resetPasswordForm = document.getElementById("resetPasswordForm");
 const resetPassContainer = document.getElementById("resetPassContainer");
 const expenseContainer = document.getElementById("expenseContainer");
+const allExpenseContainer = document.getElementById("allExpenseContainer");
 const expenseForm = document.getElementById("expenseForm");
 const welcomeUser = document.getElementById("welcomeUser");
 const navbar = document.getElementById("navbar");
 const navLoginBtn = document.getElementById("navLoginBtn");
 const buyPremium = document.getElementById("buyPremium");
 const logoutBtn = document.getElementById("logoutBtn");
+const navAllExpenses = document.getElementById("navAllExpenses");
 const forgotPassword = document.getElementById("forgotPassword");
 
 const backendAPI = "http://localhost:3000/api";
@@ -21,13 +23,13 @@ if (userInfo && userInfo.token)
 
 function showLightMode() {
   navbar.classList.add("lightmode");
-  welcomeUser.classList.add("lightmode");
+  welcomeUser?.classList.add("lightmode");
   expenseContainer.classList.add("lightmode");
 }
 
 function showDarkMode() {
   navbar.classList.add("darkmode");
-  welcomeUser.classList.add("darkmode");
+  welcomeUser?.classList.add("darkmode");
   expenseContainer.classList.add("darkmode");
 }
 
@@ -192,21 +194,26 @@ function verifyOrder(order) {
 }
 
 const page = window.location.href.split("/").at(-1);
-if (page === "index.html" || page === "") {
+if (page === "index.html" || page === "" || page === "allexpenses.html") {
   window.addEventListener("DOMContentLoaded", paintHomePage);
 }
 
 function paintHomePage() {
   if (userInfo && userInfo.token) {
     logoutBtn.style.display = "block";
-    expenseContainer.style.display = "flex";
+    if (page === "allexpenses.html" && userInfo && userInfo.isPremiumMember)
+      allExpenseContainer.style.display = "flex";
+    else if (page === "index.html" || page === "")
+      expenseContainer.style.display = "flex";
   } else {
     navLoginBtn.style.display = "block";
     welcomeUser.style.display = "flex";
   }
 
-  if (userInfo && userInfo.isPremiumMember) showDarkMode();
-  else {
+  if (userInfo && userInfo.isPremiumMember) {
+    showDarkMode();
+    navAllExpenses.style.display = "block";
+  } else {
     showLightMode();
     buyPremium.style.display = "block";
   }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All expenses | Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body style="
+      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=100');
+    ">
+    <nav class="navbar" id="navbar">
+        <div class="navbar-items">
+            <div class="navbar-items-left">
+                <a href="./index.html">Expense Tracker</a>
+                <a id="navAllExpenses" href="#">All Expenses</a>
+            </div>
+            <div class="navbar-items-right">
+                <a id="navLoginBtn" href="./login.html">Login</a>
+                <button id="buyPremium">Buy Premium</button>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="all-expense-container" id="allExpenseContainer">
+        <h1>All Expenses</h1>
+        <div class="btn-wrapper">
+            <button id="getAllExpensesBtn">All</button>
+            <button id="getDailyExpensesBtn">Daily</button>
+            <button id="getWeeklyExpensesBtn">Weekly</button>
+            <button id="getMonthlyExpensesBtn">Monthly</button>
+        </div>
+        <div class="all-expenses" id="allExpenses">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+                <tr class="expense">
+                    <td>20-03-22</td>
+                    <td>Chicken biriyani</td>
+                    <td>Food</td>
+                    <td>200</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
