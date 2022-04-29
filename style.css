@@ -182,6 +182,7 @@ body {
   border-radius: 12px;
   color: white;
   display: none;
+  margin-top: 60px;
 
   /* GLoassmorphism effect */
   backdrop-filter: blur(16px) saturate(180%);
@@ -253,6 +254,10 @@ body {
   justify-content: center;
   padding: 2rem 3rem 1rem;
   gap: 10px;
+}
+
+.all-expenses {
+  margin-bottom: auto;
 }
 
 .all-expenses table,
@@ -339,4 +344,29 @@ td {
 .signup-bottom-row a,
 .login-bottom-row a {
   color: blue;
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 4rem 0;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid white;
+  transition: all 0.3s ease-in-out;
+}
+
+.pagination a:hover,
+.pagination a:active,
+.pagination a.active {
+  background-color: #5a20cb;
+  color: white;
+  border-color: #5a20cb;
 }

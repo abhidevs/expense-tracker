@@ -214,12 +214,24 @@ function verifyOrder(order) {
 const page = window.location.href.split("/").at(-1);
 if (page === "index.html" || page === "") {
   window.addEventListener("DOMContentLoaded", paintHomePage);
-} else if (page === "allexpenses.html") {
+} else if (page.includes("allexpenses.html")) {
+  const objUrlParams = new URLSearchParams(window.location.search);
+  const currentPage = objUrlParams.get("page") || 1;
+
+  // axios
+  //   .get(`${backendAPI}/products?page=${page}`)
+  //   .then(({ data: { products, ...pageData } }) => {
+  //     listProducts(products);
+  //     showPagination(pageData);
+  //   })
+  //   .catch((err) => console.log(err));
+
   axios
-    .get(`${backendAPI}/user/expense/all`)
-    .then(({ data }) => {
-      console.log(data);
-      populateExpenses(data);
+    .get(`${backendAPI}/user/expense/all?page=${currentPage}`)
+    .then(({ data: { expenses, ...pageData } }) => {
+      console.log({ expenses, pageData });
+      populateExpenses(expenses);
+      showPagination(pageData);
     })
     .catch((err) => {
       alert(err.response?.data?.message);
@@ -231,7 +243,11 @@ if (page === "index.html" || page === "") {
 function paintHomePage() {
   if (userInfo && userInfo.token) {
     logoutBtn.style.display = "block";
-    if (page === "allexpenses.html" && userInfo && userInfo.isPremiumMember)
+    if (
+      page.includes("allexpenses.html") &&
+      userInfo &&
+      userInfo.isPremiumMember
+    )
       allExpenseContainer.style.display = "flex";
     else if (page === "index.html" || page === "")
       expenseContainer.style.display = "flex";
@@ -264,4 +280,26 @@ function populateExpenses(expenses) {
 
     allExpenses.children[0].appendChild(item);
   });
+}
+
+function showPagination({
+  currentPage,
+  hasNextPage,
+  nextPage,
+  hasPreviousPage,
+  previousPage,
+  lastPage,
+}) {
+  let innerHTML = ``;
+
+  if (currentPage !== 1 && previousPage !== 1)
+    innerHTML += `<a href='?page=1'>1</a>`;
+  if (hasPreviousPage)
+    innerHTML += `<a href='?page=${previousPage}'>${previousPage}</a>`;
+  innerHTML += `<a href='#' class='active'>${currentPage}</a>`;
+  if (hasNextPage) innerHTML += `<a href='?page=${nextPage}'>${nextPage}</a>`;
+  if (lastPage !== currentPage && lastPage !== nextPage)
+    innerHTML += `<a href='?page=${lastPage}'>${lastPage}</a>`;
+
+  pagination.innerHTML = innerHTML;
 }
