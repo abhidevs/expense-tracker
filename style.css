@@ -182,7 +182,7 @@ body {
   border-radius: 12px;
   color: white;
   display: none;
-  margin-top: 60px;
+  margin-top: 70px;
 
   /* GLoassmorphism effect */
   backdrop-filter: blur(16px) saturate(180%);
@@ -369,4 +369,13 @@ td {
   background-color: #5a20cb;
   color: white;
   border-color: #5a20cb;
+}
+
+#rowsPerPage {
+  margin-left: 1rem;
+  padding: 7px 5px;
+  font-size: 14px;
+  font-family: inherit;
+  border: none;
+  outline: none;
 }

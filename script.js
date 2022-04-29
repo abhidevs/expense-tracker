@@ -15,6 +15,7 @@ const navAllExpenses = document.getElementById("navAllExpenses");
 const allExpenses = document.getElementById("allExpenses");
 const downloadAsFile = document.getElementById("downloadAsFile");
 const forgotPassword = document.getElementById("forgotPassword");
+const rowsPerPage = document.getElementById("rowsPerPage");
 
 const backendAPI = "http://localhost:3000/api";
 
@@ -192,6 +193,17 @@ downloadAsFile?.addEventListener("click", (e) => {
     });
 });
 
+rowsPerPage?.addEventListener("change", (e) => {
+  const userInfo = JSON.parse(localStorage.getItem("ET_Userinfo"));
+  localStorage.setItem(
+    "ET_Userinfo",
+    JSON.stringify({ ...userInfo, rowsPerPage: e.target.value })
+  );
+
+  const url = window.location.href.split("/").slice(0, -1).join("/");
+  window.location.replace(`${url}/allexpenses.html`);
+});
+
 function verifyOrder(order) {
   axios
     .post(`${backendAPI}/user/payment/verify`, { order })
@@ -215,29 +227,9 @@ const page = window.location.href.split("/").at(-1);
 if (page === "index.html" || page === "") {
   window.addEventListener("DOMContentLoaded", paintHomePage);
 } else if (page.includes("allexpenses.html")) {
-  const objUrlParams = new URLSearchParams(window.location.search);
-  const currentPage = objUrlParams.get("page") || 1;
-
-  // axios
-  //   .get(`${backendAPI}/products?page=${page}`)
-  //   .then(({ data: { products, ...pageData } }) => {
-  //     listProducts(products);
-  //     showPagination(pageData);
-  //   })
-  //   .catch((err) => console.log(err));
-
-  axios
-    .get(`${backendAPI}/user/expense/all?page=${currentPage}`)
-    .then(({ data: { expenses, ...pageData } }) => {
-      console.log({ expenses, pageData });
-      populateExpenses(expenses);
-      showPagination(pageData);
-    })
-    .catch((err) => {
-      alert(err.response?.data?.message);
-      console.log(err);
-    });
+  loadExpenses();
   window.addEventListener("DOMContentLoaded", paintHomePage);
+  rowsPerPage.value = userInfo.rowsPerPage || 10;
 }
 
 function paintHomePage() {
@@ -263,6 +255,27 @@ function paintHomePage() {
     showLightMode();
     buyPremium.style.display = "block";
   }
+}
+
+function loadExpenses() {
+  const objUrlParams = new URLSearchParams(window.location.search);
+  const currentPage = objUrlParams.get("page") || 1;
+  const perPage =
+    JSON.parse(localStorage.getItem("ET_Userinfo")).rowsPerPage || 10;
+
+  axios
+    .get(
+      `${backendAPI}/user/expense/all?page=${currentPage}&perpage=${perPage}`
+    )
+    .then(({ data: { expenses, ...pageData } }) => {
+      console.log({ expenses, pageData });
+      populateExpenses(expenses);
+      showPagination(pageData);
+    })
+    .catch((err) => {
+      alert(err.response?.data?.message);
+      console.log(err);
+    });
 }
 
 function populateExpenses(expenses) {
