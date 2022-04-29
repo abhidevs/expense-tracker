@@ -12,6 +12,8 @@ const navLoginBtn = document.getElementById("navLoginBtn");
 const buyPremium = document.getElementById("buyPremium");
 const logoutBtn = document.getElementById("logoutBtn");
 const navAllExpenses = document.getElementById("navAllExpenses");
+const allExpenses = document.getElementById("allExpenses");
+const downloadAsFile = document.getElementById("downloadAsFile");
 const forgotPassword = document.getElementById("forgotPassword");
 
 const backendAPI = "http://localhost:3000/api";
@@ -24,13 +26,13 @@ if (userInfo && userInfo.token)
 function showLightMode() {
   navbar.classList.add("lightmode");
   welcomeUser?.classList.add("lightmode");
-  expenseContainer.classList.add("lightmode");
+  expenseContainer?.classList.add("lightmode");
 }
 
 function showDarkMode() {
   navbar.classList.add("darkmode");
   welcomeUser?.classList.add("darkmode");
-  expenseContainer.classList.add("darkmode");
+  expenseContainer?.classList.add("darkmode");
 }
 
 signUpForm?.addEventListener("submit", (e) => {
@@ -174,6 +176,22 @@ resetPasswordForm?.addEventListener("submit", (e) => {
     });
 });
 
+downloadAsFile?.addEventListener("click", (e) => {
+  axios
+    .get(`${backendAPI}/user/expense/downloadfile`)
+    .then(({ data }) => {
+      console.log(data);
+
+      let a = document.createElement("a");
+      a.href = data.fileURL;
+      a.click();
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+      console.log(err.response);
+    });
+});
+
 function verifyOrder(order) {
   axios
     .post(`${backendAPI}/user/payment/verify`, { order })
@@ -194,7 +212,19 @@ function verifyOrder(order) {
 }
 
 const page = window.location.href.split("/").at(-1);
-if (page === "index.html" || page === "" || page === "allexpenses.html") {
+if (page === "index.html" || page === "") {
+  window.addEventListener("DOMContentLoaded", paintHomePage);
+} else if (page === "allexpenses.html") {
+  axios
+    .get(`${backendAPI}/user/expense/all`)
+    .then(({ data }) => {
+      console.log(data);
+      populateExpenses(data);
+    })
+    .catch((err) => {
+      alert(err.response?.data?.message);
+      console.log(err);
+    });
   window.addEventListener("DOMContentLoaded", paintHomePage);
 }
 
@@ -217,4 +247,21 @@ function paintHomePage() {
     showLightMode();
     buyPremium.style.display = "block";
   }
+}
+
+function populateExpenses(expenses) {
+  expenses.forEach((ex) => {
+    const item = document.createElement("tr");
+    item.className = "expense";
+    const creationDate = new Date(ex.createdAt).toLocaleDateString();
+
+    item.innerHTML = `
+      <td>${creationDate}</td>
+      <td>${ex.desc}</td>
+      <td>${ex.category}</td>
+      <td>${ex.amount}</td>
+    `;
+
+    allExpenses.children[0].appendChild(item);
+  });
 }
